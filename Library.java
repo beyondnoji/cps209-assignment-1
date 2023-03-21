@@ -150,7 +150,7 @@ public class Library
 				playlists.get(i).getContent().remove(i); 
 			}
 		} 
-		songs.remove(index); // remove the song from the ArrayList songs 
+		songs.remove(index - 1); // remove the song from the ArrayList songs 
 		return false;
 	}
 	

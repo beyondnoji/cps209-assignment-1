@@ -74,7 +74,7 @@ public class Playlist
 		if (contains(index)) 
 		{	
 			// then play the AudioContent object at that index in the ArrayList contents 
-			contents.get(index).play();
+			contents.get(index - 1).play();
 		}
 	}
 	

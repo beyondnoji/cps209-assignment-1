@@ -42,8 +42,9 @@ public class Song extends AudioContent implements Comparable
 	// Play the song by setting the audioFile to the lyrics string and then calling the play() method of the superclass
 	public void play()
 	{
-		this.setLyrics(this.getLyrics());
+		this.setAudioFile(this.getLyrics());
 		super.play();
+		System.out.println();
 	}
 	
 	public String getComposer()
