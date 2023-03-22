@@ -3,6 +3,8 @@ import java.util.ArrayList;
 // Simulation of audio content in an online store
 // The songs, podcasts, audiobooks listed here can be "downloaded" to your library
 
+// Name : Jaihunbek Mohammadullah
+// Student ID : 501180612
 public class AudioContentStore
 {
 		private ArrayList<AudioContent> contents; 
@@ -85,7 +87,8 @@ public class AudioContentStore
 			// Create a podcast object if you are doing the bonus see the makeSeasons() method below
 			// It is currently commented out. It makes use of a class Season you may want to also create
 			// or change it to something else
-					
+			Podcast podcast = new Podcast("The Secret Life of Canala", 2021, "865", Podcast.TYPENAME, "", 0, "Leah-Simone Bowen, Falen Johnson", makeSeasons()); 
+			contents.add(podcast); 
 		}
 		
 		
@@ -187,19 +190,19 @@ public class AudioContentStore
 		}
 		
 		// Podcast Seasons
-		/*
+		
 		private ArrayList<Season> makeSeasons()
 		{
-			ArrayList<Season> seasons = new ArrayList<Season>();
+		ArrayList<Season> seasons = new ArrayList<Season>();
 		  Season s1 = new Season();
 		  s1.episodeTitles.add("Bay Blanket");
 		  s1.episodeTitles.add("You Don't Want to Sleep Here");
 		  s1.episodeTitles.add("The Gold Rush");
 		  s1.episodeFiles.add("The Bay Blanket. These warm blankets are as iconic as Mariah Carey's \r\n"
 		  		+ "lip-syncing, but some people believe they were used to spread\r\n"
-		  		+ " smallpox and decimate entire Indigenous communities. \r\n"
+		  		+ "smallpox and decimate entire Indigenous communities. \r\n"
 		  		+ "We dive into the history of The Hudson's Bay Company and unpack the\r\n"
-		  		+ " very complicated story of the iconic striped blanket.");
+		  		+ "very complicated story of the iconic striped blanket.");
 		  s1.episodeFiles.add("There is no doubt that the Klondike Gold Rush was an iconic event. \r\n"
 		  		+ "But what did the mining industry cost the original people of the territory? \r\n"
 		  		+ "And what was left when all the gold was gone? And what is a sour toe cocktail?");
@@ -217,13 +220,12 @@ public class AudioContentStore
 		  		+ "But what did the mining industry cost the original people of the territory? \r\n"
 		  		+ "And what was left when all the gold was gone? And what is a sour toe cocktail?");
 		  s2.episodeFiles.add("Can the foundation of Canada be traced back to Indigenous trade routes?\r\n"
-		  		+ " In this episode Falen and Leah take a trip across the Great Lakes, they talk corn\r\n"
-		  		+ " and vampires, and discuss some big concerns currently facing Canada's water."); 
+		  		+ "In this episode Falen and Leah take a trip across the Great Lakes, they talk corn\r\n"
+		  		+ "and vampires, and discuss some big concerns currently facing Canada's water."); 
 		  s2.episodeLengths.add(45);
 		  s2.episodeLengths.add(50);
 		 
 		  seasons.add(s2);
 		  return seasons;
 		}
-		*/
 }

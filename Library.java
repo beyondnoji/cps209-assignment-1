@@ -6,13 +6,15 @@ import java.util.Comparator;
 /*
  * This class manages, stores, and plays audio content such as songs, podcasts and audiobooks. 
  */
+
+// Name : Jaihunbek Mohammadullah
+// Student ID : 501180612
 public class Library
 {
 	private ArrayList<Song> 			songs; 
 	private ArrayList<AudioBook> 	audiobooks;
 	private ArrayList<Playlist> 	playlists; 
-	
-  //private ArrayList<Podcast> 	podcasts;
+	private ArrayList<Podcast> 	podcasts;
 	
 	// Public methods in this class set errorMesg string 
 	// Error Messages can be retrieved from main in class MyAudioUI by calling  getErrorMessage()
@@ -29,7 +31,7 @@ public class Library
 		songs 			= new ArrayList<Song>(); 
 		audiobooks 	= new ArrayList<AudioBook>(); ;
 		playlists   = new ArrayList<Playlist>();
-	  //podcasts		= new ArrayList<Podcast>(); ;
+	  	podcasts		= new ArrayList<Podcast>(); ;
 	}
 	/*
 	 * Download audio content from the store. Since we have decided (design decision) to keep 3 separate lists in our library
@@ -58,13 +60,12 @@ public class Library
 			audiobooks.add(addedAudioBook); 
 			return true; 
 		}
-		/* 
 		else if (content.getType().equals(Podcast.TYPENAME) &&  !podcasts.contains(content) )
 		{
-			podcasts.add() 
+			Podcast addedPodcast = (Podcast) content; 
+			podcasts.add(addedPodcast); 
 			return true; 
 		}
-		*/
 		errorMsg = content.getType() + " already downloaded"; 
 		return false; 
 	}
@@ -98,8 +99,15 @@ public class Library
   // Print Information (printInfo()) about all podcasts in the array list
 	public void listAllPodcasts()
 	{
-		
+		for (int i = 0; i < podcasts.size(); i++)
+		{
+			int index = i + 1; 
+			System.out.print(index + ". "); 
+			podcasts.get(i).printInfo();
+			System.out.println();
+		}
 	}
+
 	
   // Print the name of all playlists in the playlists array list
 	// First print the index number as in listAllSongs() above
@@ -137,22 +145,42 @@ public class Library
 
 	// Delete a song from the library (i.e. the songs list) - 
 	// also go through all playlists and remove it from any playlist as well if it is part of the playlist
-	public boolean deleteSong(int index)
+
+	public boolean deleteSong(int index) // the argument is 1-indexed
 	{
+		if (index < 1 || index > songs.size())
+		{
+			errorMsg = "Song Not Found";
+			return false; // if the index is not valid return false
+		}  
+
+		String songTitle = songs.get(index - 1).getTitle(); 
 		for (int i = 0; i < playlists.size(); i++)
 		{
 			// iterate through the ArrayList of Playlist objects 
 			// then check if this song is contained in the Playlist object's ArrayList called contents
 			if (playlists.get(i).getContent().contains(songs.get(index - 1))) 
 			{
-				// remove the song in the ArrayList contents of the Playlist object at the index it is found 
-				playlists.get(i).getContent().remove(i); 
+				// if this Playlist's content has this song, iterate through the contents ArrayList to find the index of it 
+				// so that we can remove it from this playlist
+				for (int j = 0; j < playlists.get(i).getContent().size(); j++)
+				{
+					int songToRemoveIndex = playlists.get(i).findSongInPlaylist(songTitle); 
+					if (songToRemoveIndex != -1) 
+					{
+						// remove the song in the ArrayList contents of the Playlist object at the index it is found 
+						playlists.get(i).getContent().remove(songToRemoveIndex); 
+					}
+				}
+
 			}
-		} 
+		}
+
 		songs.remove(index - 1); // remove the song from the ArrayList songs 
-		return false;
+		return true; 
+		
 	}
-	
+
   //Sort songs in library by year
 	public void sortSongsByYear()
 	{
@@ -235,15 +263,52 @@ public class Library
 	// Play podcast from list (specify season and episode)
 	// Bonus
 	public boolean playPodcast(int index, int season, int episode)
-	{
-		return false;
+	{	
+		if (index <  1 || index > podcasts.size()) // check if there is such a podcast
+		{
+			errorMsg = "Podcast Not Found";
+			return false; 
+		}
+
+		// Validate the other inputted parameters as well 
+		if (! podcasts.get(index - 1).hasSeason(season)) // Check if this podcast HAS this season, i.e., if the index is valid for the arraylist of podcasts
+		{
+			errorMsg = "Season Not Found"; 
+			return false; 
+		}
+
+		if (! podcasts.get(index - 1).seasons.get(season - 1).hasEpisode(episode)) // likewise, check if this season object HAS this episode, i.e., if episode index is valid for the arraylist of episodes
+		{
+			errorMsg = "Episode Not Found"; 
+			return false; 
+		}
+		 
+
+		// if the all the inputs are valid, then go set the correct episode file in the place of AudioFile
+		podcasts.get(index - 1).setEpisodeData(season, episode);
+		// Then play it
+		podcasts.get(index- 1).play();
+		return true; 
 	}
 	
 	// Print the episode titles of a specified season
 	// Bonus 
 	public boolean printPodcastEpisodes(int index, int season)
 	{
-		return false;
+		if (index <  1 || index > podcasts.size()) // check if there is such a podcast
+		{
+			errorMsg = "Podcast Not Found";
+			return false; 
+		}
+
+		// Validate the other inputted parameters as well 
+		if (! podcasts.get(index - 1).hasSeason(season)) // Check if this podcast HAS this season, i.e., if the index is valid for the arraylist of podcasts
+		{
+			errorMsg = "Season Not Found"; 
+			return false; 
+		}
+		podcasts.get(index - 1).printTOC(season);
+		return true; 
 	}
 	
 	// Play a chapter of an audio book from list of audiobooks
@@ -282,6 +347,26 @@ public class Library
 		return true;
 	}
 	
+	// PRINT PDOCAST TOC 
+	public boolean printPodcastTOC(int podcast, int season) 
+	{ 
+
+		// Validate the parameters and then print the TOC for that particular season in the podcast
+		if (podcast < 1 || podcast > podcasts.size()) 
+		{
+			errorMsg = "Podcast Not Found"; 
+			return false; 
+		}
+
+		if (! podcasts.get(podcast- 1).hasSeason(season)) // 
+		{
+			errorMsg = "Season Not Found"; 
+			return false; 
+		}
+
+		podcasts.get(podcast - 1).printTOC(season);
+		return true; 
+	}
   /*
    * Playlist Related Methods
    */
@@ -377,15 +462,15 @@ public class Library
 			this.getPlaylist(playlistTitle).addContent(audiobooks.get(index-1));
 			return true; 
 		}
-		/* 
+		
 		else if (type.equalsIgnoreCase(Podcast.TYPENAME))
 		{
 			// by means of the method above, retrieve the playlist object 
 			// from the list and then add the Podcast object contained at the index given in the podcasts list 
-			this.gePlaylist(playlistTitle).addContent(podcasts.get(index));
+			this.getPlaylist(playlistTitle).addContent(podcasts.get(index));
 			return true; 
 		}
-		 */
+		
 		return false;
 	}
 

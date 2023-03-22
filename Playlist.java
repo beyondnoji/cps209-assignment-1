@@ -3,6 +3,8 @@ import java.util.ArrayList;
 /*
  * A Playlist contains an array list of AudioContent (i.e. Song, AudioBooks, Podcasts) from the library
  */
+// Name : Jaihunbek Mohammadullah
+// Student ID : 501180612
 public class Playlist
 {
 	private String title;
@@ -73,7 +75,7 @@ public class Playlist
 	{	
 		// Check if the index is valid, 
 		if (contains(index)) 
-		{	
+		{
 			// then play the AudioContent object at that index in the ArrayList contents 
 			contents.get(index - 1).play();
 		}
@@ -101,5 +103,21 @@ public class Playlist
 		contents.remove(index-1);
 	}
 	
+	// Self made helper method to get the index of a song from a playlist given the title 
+	// I use this function in Library class in order to deleteSong both form Library and ALL the playlists in which it might be 
+	// @returns the 0-index of the song in the playlist
+	// if not found it returns -1 
+	public int findSongInPlaylist(String title) 
+	{
+		for (int i = 0; i < contents.size(); i++)
+		{
+			if (contents.get(i).getTitle().equals(title)) 
+			{
+				return i; 
+			}
+		}
+
+		return -1; 
+	}
 	
 }

@@ -5,6 +5,8 @@ import java.util.StringTokenizer;
 
 // Simulation of a Simple Text-based Music App (like Apple Music)
 
+// Name : Jaihunbek Mohammadullah
+// Student ID : 501180612
 public class MyAudioUI
 {
 	public static void main(String[] args)
@@ -155,7 +157,31 @@ public class MyAudioUI
 			// see class Library for the method to call
 			else if (action.equalsIgnoreCase("PODTOC")) 
 			{
-				
+				// Read and validate the input for the podcast index
+				// this index-variable is 1-indexed -- which is why it is called "podcast", rather than "podIndex" 
+				// this helps me keep track of when it is 1-indexed or 0-indexed
+				int podcast = 0; 
+
+				System.out.print("Podcast Number: ");
+				if (scanner.hasNextInt())
+				{
+					podcast = scanner.nextInt(); 
+					scanner.nextLine(); 
+				}
+
+				int season = 0;
+				System.out.print("Season Number: ");
+				if (scanner.hasNextInt())
+				{
+					season = scanner.nextInt(); 
+					scanner.nextLine(); 
+				}
+				// At once print the TOC and check the boolean value 
+				if (!mylibrary.printPodcastTOC(podcast, season)); 
+				{
+					System.out.println(mylibrary.getErrorMessage());
+				}
+
 			}
 			// Similar to playsong above except for podcast
 			// In addition to the podcast index from the list of podcasts, 
@@ -163,6 +189,39 @@ public class MyAudioUI
 			// see class Library for the method to call
 			else if (action.equalsIgnoreCase("PLAYPOD")) 
 			{
+				// Read and validate whichPodcast input 
+				int whichPodcast = 0;
+				System.out.print("Podcast Number: ");
+				if (scanner.hasNextInt())
+				{
+					whichPodcast = scanner.nextInt(); 
+					scanner.nextLine(); 
+				}
+
+				// Read and validate whichSeason input
+				int whichSeason = 0;
+				System.out.print("Season: ");
+				if (scanner.hasNextInt())
+				{
+					whichSeason = scanner.nextInt(); 
+					scanner.nextLine(); 
+				}
+
+				// Read and validate whichSeason input
+				int whichEpisode = 0;
+				System.out.print("Episode: ");
+				if (scanner.hasNextInt())
+				{
+					whichEpisode = scanner.nextInt(); 
+					scanner.nextLine(); 
+				}
+				
+				// Play the book while at once checking the boolean value 
+				if (!mylibrary.playPodcast(whichPodcast, whichSeason, whichEpisode)) //
+				{
+					System.out.println(mylibrary.getErrorMessage());
+				}
+				
 				
 			}
 			// Specify a playlist title (string) 
@@ -226,6 +285,7 @@ public class MyAudioUI
 					index = scanner.nextInt(); 
 					scanner.nextLine(); 
 				}
+
 				// Play the book while at once checking the boolean value 
 				if (!mylibrary.deleteSong(index)) //
 				{

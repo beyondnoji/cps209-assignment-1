@@ -1,16 +1,22 @@
 import java.util.ArrayList; 
+// Name : Jaihunbek Mohammadullah
+// Student ID : 501180612
+public class Season {
 
-class Season {
-
-    private ArrayList<String> episodes; // this ArrayList consists of AudioFile strings
-    private ArrayList<String> episodeTitles; 
-    private ArrayList<String> epsiodeLengths; // stores episode lengths in minutes 
+    ArrayList<String> episodeFiles; // this ArrayList consists of AudioFile strings
+    ArrayList<String> episodeTitles; 
+    ArrayList<Integer> episodeLengths; // stores episode lengths in minutes 
     
     public Season()
     {
-        episodes = new ArrayList<>();
+        episodeFiles = new ArrayList<>();
         episodeTitles = new ArrayList<>(); 
-        epsiodeLengths = new ArrayList<>(); 
+        episodeLengths = new ArrayList<>(); 
 
+    }
+
+    public boolean hasEpisode(int episode) 
+    {
+        return !(episode < 1 || episode > episodeFiles.size());
     }
 }
