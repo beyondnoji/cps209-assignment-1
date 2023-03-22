@@ -111,7 +111,6 @@ public class Library
 			int index = i + 1;
 			System.out.print("" + index + ". ");
 			System.out.println(playlists.get(i).getTitle()); 
-			System.out.println();	
 		}
 	}
 	
@@ -337,7 +336,7 @@ public class Library
 		{
 			if (playlists.get(i).getTitle().equals(playlistTitle))
 			{
-				playlists.get(i).play(indexInPL - 1); 
+				playlists.get(i).play(indexInPL); 
 				return true; 
 			}
 		}
@@ -394,12 +393,12 @@ public class Library
 	// Make sure the given index of the song/audiobook/podcast in the playlist is valid 
 	public boolean delContentFromPlaylist(int index, String title)
 	{
-		if (! this.getPlaylist(title).contains(index - 1)) 
+		if (! this.getPlaylist(title).contains(index)) 
 		{
 			errorMsg = "Index in playlist is not valid"; 
 			return false; 
 		}
-		this.getPlaylist(title).deleteContent(index - 1);
+		this.getPlaylist(title).deleteContent(index);
 		return true; 
 	}
 	

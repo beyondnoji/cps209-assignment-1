@@ -52,6 +52,7 @@ public class Playlist
 		{
 			System.out.print(i+1 + ". ");
 			contents.get(i).printInfo();
+			System.out.println();
 		}
 	}
 
